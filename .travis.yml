@@ -1,0 +1,36 @@
+language: node_js
+#node_js: stable
+ 
+# S: Build Lifecycle
+before_install:
+- npm install -g hexo
+- npm install -g hexo-cli
+
+
+install:
+  - npm install
+ 
+ 
+#before_script:
+ # - npm install -g gulp
+ 
+script:
+  - hexo clean
+  - hexo g
+
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "jason_msbaby"
+  - git config user.email "Jason_Msbaby@163.com"
+  - git add .
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://${JASON_BLOG_TOKEN}@${BLOG_REF}" master:master
+# E: Build LifeCycle
+ 
+branches:
+  only:
+    - master
+env:
+ global:
+   - BLOG_REF: https://github.com/JasonMsbaby/JasonMsbaby.github.io.git
